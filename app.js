@@ -16,7 +16,7 @@ function addPlace(event) {
     //place DIV
     const placeDiv = document.createElement("div");
     placeDiv.classList.add("place");
-    
+
     //Create LI
     const newPlace = document.createElement('li');
     newPlace.innerText = locationInput.value;
@@ -36,7 +36,7 @@ function addPlace(event) {
 
     //Delete Button
     const deleteButton = document.createElement('button');
-    deleteButton.innerHTML = '<i class="fas fa-trash"> </i>'
+    deleteButton.innerHTML = '<i class="fas fa-ban"> </i>'
     deleteButton.classList.add("delete-btn");
     placeDiv.appendChild(deleteButton);
 
