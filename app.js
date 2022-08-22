@@ -55,6 +55,4 @@ function deleteItem(e){
         place.remove();
     }
 
-    //Check mark
-
 }
