@@ -11,15 +11,17 @@ travelList.addEventListener('click', deleteItem);
 
 //functions 
 function addPlace(event) {
-    //prevent form from selecting 
+  
     event.preventDefault();
     //place DIV
     const placeDiv = document.createElement("div");
     placeDiv.classList.add("place");
+    
     //Create LI
     const newPlace = document.createElement('li');
     newPlace.innerText = locationInput.value;
     newPlace.classList.add('new-place')
+
     //Create Img
     const newImage = document.createElement('img');
         if (imageInput.value == ""){
@@ -37,13 +39,13 @@ function addPlace(event) {
     deleteButton.innerHTML = '<i class="fas fa-trash"> </i>'
     deleteButton.classList.add("delete-btn");
     placeDiv.appendChild(deleteButton);
+
     //Append to list
     travelList.appendChild(placeDiv);
+
     //Clear travel input value
     imageInput.value = "";
     locationInput.value = "";
-
-    newPlace.addEventListener("click", deleteItem);
 }
 
 
