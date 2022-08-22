@@ -36,7 +36,7 @@ function addPlace(event) {
 
     //Delete Button
     const deleteButton = document.createElement('button');
-    deleteButton.innerHTML = '<i class="fas fa-ban"> </i>'
+    deleteButton.innerHTML = '<i class="fas fa-trash"> </i>'
     deleteButton.classList.add("delete-btn");
     placeDiv.appendChild(deleteButton);
 
@@ -46,6 +46,7 @@ function addPlace(event) {
     //Clear travel input value
     imageInput.value = "";
     locationInput.value = "";
+    
 }
 
 
