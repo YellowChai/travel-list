@@ -9,7 +9,11 @@ const defaultImage ="https://image.shutterstock.com/shutterstock/photos/10949455
 
 // Event Listeners
 form.addEventListener("submit", addPlace);
-travelList.addEventListener("click", deleteItem);
+
+
+// (e.target.classList[0] === "delete-btn") ? travelList.addEventListener("click",deleteItem) : travelList.addEventListener("click", editItem);
+// travelList.addEventListener("click", deleteItem);
+travelList.addEventListener("click", editItem);
 
 //functions 
 function addPlace(event) {
@@ -47,17 +51,18 @@ function addPlace(event) {
     placeDiv.appendChild(newImage);
     console.log(newImage.src);
 
+    
+    //Edit Button
+    const editButton = document.createElement('button');
+    editButton.innerText = "Edit";
+    editButton.classList.add("edit-btn");
+    placeDiv.appendChild(editButton);
+    
     //Delete Button
     const deleteButton = document.createElement('button');
     deleteButton.innerText = "Delete";
     deleteButton.classList.add("delete-btn");
     placeDiv.appendChild(deleteButton);
-
-    //Edit Button
-    const editButton = document.createElement('button');
-    editButton.innterText = "Edit";
-    editButton.classList.add("edit-btn");
-    placeDiv.appendChild(editButton);
 
     //Append to list
     travelList.appendChild(placeDiv);
@@ -71,19 +76,33 @@ function addPlace(event) {
 
 function deleteItem(e){
     const item = e.target;
-    console.log(item.classList)
     // Delete list
+
     if(item.classList[0] === 'delete-btn'){
         const place = item.parentElement;
         place.remove();
     }
 }
 
-// function editItem(e){
-//     const item = e.target;
-//     //Edit list
-//     if(item.classList[0] === 'edit-btn'){
+function editItem(e){
+    const item = e.target;
+    //Edit list
+    if(item.classList[0] === 'edit-btn'){
+        list = item.parentElement;
+        const dest = list.querySelector(".new-dest");
+        const location = list.querySelector(".new-place");
+        const img = list.querySelector(".new-image");
+        const description = list.querySelector(".new-description");
+
+        const updatedDest = window.prompt("Enter new Destination");
+        const updatedLocation = window.prompt("Enter new Location");
+        const updatedImg = window.prompt("Enter new image url");
+        const updatedDescription = window.prompt("Enter new description"); 
         
-//     }
-// }
+        updatedDest? dest.innerText = updatedDest : null;
+        updatedLocation? location.innerText = updatedLocation : null;
+        updatedImg? img.src = updatedImg : null;
+        updatedDescription? description.innerText = updatedDescription : null;
+    }
+}
 

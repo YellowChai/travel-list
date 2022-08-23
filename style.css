@@ -73,7 +73,7 @@ form button:hover {
 .place li{
     flex: 1;
 }
-
+.edit-btn,
 .delete-btn {
     background: #4a1b44;
     color: white;
