@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="./style.css">
     <title>Travel List</title>
 </head>
@@ -14,24 +13,29 @@
         <h1> Travel List </h1>
     </header>
 
-    <form id="form" action="/">
-        <div class="input-control">
-            <label for="location">Location</label>
-            <input id="location" name="location" type="text" required>
-            <div class="error"></div>
+
+    <form id="form">
+        <div class="user-input">
+            <label for="destination"> Destination </label>
+            <input id= "destination" type="text" requried minlength="2" required/>
         </div><br>
-        <div class="input-control">
-            <label for="img">Image url</label>
+        <div class="user-input">
+            <label for="location"> Location </label>
+            <input id="location" type="text" requried minlength="2" required/>
+        </div><br>
+        <div class="user-input">
+            <label for="description"> Description </label>
+            <input id = "description"type="text" requried minlength="2" required/>
+        </div><br>
+        <div class="user-input">
+            <label for="img">Photo url</label>
             <input id="img" name="img" type="url">
-        </div>
-        <br>
-        <button class="list-button" type="submit">
-            <i class="fas fa-plus-square"></i>
-        </button>
+        </div><br>   
+        <button class="list-button" type="submit"> submit </button>             
     </form>
+
     <div class="travel-container">
-        <ul class="travel-list">
-        </ul>
+        <ul class="travel-list"> </ul>
     </div>        
     
     <script src="./app.js"></script>

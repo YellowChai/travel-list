@@ -13,8 +13,6 @@ body{
 
 header {
     font-size: 1.5rem;
-    justify-content: center;
-    align-items: center;
 }
 
 header,
@@ -75,7 +73,7 @@ form button:hover {
 .place li{
     flex: 1;
 }
-.complete-btn,
+
 .delete-btn {
     background: #4a1b44;
     color: white;
@@ -84,24 +82,13 @@ form button:hover {
     cursor: pointer;
     font-size: 1rem;
 }
-.complete-btn{
-    background: rgb(73, 204, 73);
-}
+
 .new-place{
     padding: 0rem 0.5rem;
 }
 
-.fa-trash, 
-.fa-check{
-    pointer-events: none;
-}
 .new-image{
     border-radius: 8px;
     width: 300px;
     padding: 5px;
 }
-/* .input-control{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-} */
