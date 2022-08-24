@@ -30,7 +30,7 @@ form {
     display: flex;
     flex-direction: column;
     align-items: left;
-    padding-left: 20px;
+    padding-left: 30px;
     /* width: 300px; */
     
 }
@@ -93,13 +93,14 @@ label {
     color: black;
     font-size: 1.5rem;
     display: flex;
-    /* justify-content: space-between; */
+    /* justify-content: space-between;
+    align-content: space-between; */
     align-items: center;
     flex-direction: column;    
 }
 
 .place li{
-    flex: 1;
+    font-size: 70%;
 }
 
 .edit-btn,
@@ -107,9 +108,11 @@ label {
     background: #4a1b44;
     color: white;
     border: none;
-    padding: 1rem;
+    padding: 0.5rem;
     cursor: pointer;
     font-size: 1rem;
+    margin: 0.1rem;
+    min-width: 20%;
 }
 
 .new-place{
