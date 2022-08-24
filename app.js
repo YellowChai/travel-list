@@ -10,10 +10,8 @@ const defaultImage ="https://image.shutterstock.com/shutterstock/photos/10949455
 // Event Listeners
 form.addEventListener("submit", addPlace);
 
-
-// (e.target.classList[0] === "delete-btn") ? travelList.addEventListener("click",deleteItem) : travelList.addEventListener("click", editItem);
-// travelList.addEventListener("click", deleteItem);
-travelList.addEventListener("click", editItem);
+// Delete or Edit 
+travelList.addEventListener("click", deleteItem);
 
 //functions 
 function addPlace(event) {
@@ -81,6 +79,8 @@ function deleteItem(e){
     if(item.classList[0] === 'delete-btn'){
         const place = item.parentElement;
         place.remove();
+    }else if(item.classList[0] === 'edit-btn'){
+        editItem(e);
     }
 }
 
