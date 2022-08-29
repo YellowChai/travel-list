@@ -1,9 +1,8 @@
 const form = document.getElementById('form')
-const locationInput = document.getElementById('location');
-const imageInput = document.getElementById('img')
-const destInput = document.getElementById('destination');
-const descriptionInput = document.getElementById('description');
-const travelButton = document.querySelector(".list-button");
+const locationInput = form.location
+const descriptionInput = form.description
+const destInput = form.destination
+
 const travelList = document.querySelector(".travel-list");
 const defaultImage ="https://image.shutterstock.com/shutterstock/photos/1094945555/display_1500/stock-photo-blue-suitcase-with-sun-glasses-hat-and-camera-on-pastel-blue-background-travel-concept-minimal-1094945555.jpg";
 
@@ -38,7 +37,7 @@ function addPlace(event) {
     const requestUrl = 'https://api.unsplash.com/search/photos?query=' + newPlace.innerHTML + '-' + newDest.innerHTML+ '&client_id=Q41Uq_nT8K_r-7vPg_E035mTUIQwJbMvx18L9scLpfs';
     const newImage = document.createElement('img');
     description.addEventListener('click', fetchImg());
-    
+
     async function fetchImg(){
         await fetch(requestUrl)
         .then(response => {
@@ -48,8 +47,7 @@ function addPlace(event) {
             let img = data.results[0]? data.results[0].urls.regular : defaultImage;
             newImage.src = img 
             newImage.classList.add('new-image')            
-        })
-        
+        })     
     }
  
     //Edit Button
@@ -94,7 +92,7 @@ function editItem(e){
     const item = e.target;
     //Edit list
     if(item.classList[0] === 'edit-btn'){
-        list = item.parentElement;
+        const list = item.parentElement;
         const dest = list.querySelector(".new-dest");
         const location = list.querySelector(".new-place");
         const img = list.querySelector(".new-image");
@@ -102,12 +100,26 @@ function editItem(e){
 
         const updatedDest = window.prompt("Enter new Destination");
         const updatedLocation = window.prompt("Enter new Location");
-        const updatedImg = window.prompt("Enter new image url");
         const updatedDescription = window.prompt("Enter new description"); 
         
         updatedDest? dest.innerText = updatedDest : null;
         updatedLocation? location.innerText = updatedLocation : null;
-        updatedImg? img.src = updatedImg : null;
+        // updatedImg? img.src = updatedImg : null;
+
+        const requestUrl = 'https://api.unsplash.com/search/photos?query=' + updatedDest + '-' + updatedLocation+ '&client_id=Q41Uq_nT8K_r-7vPg_E035mTUIQwJbMvx18L9scLpfs';
+        window.addEventListener('change', fetchImg());
+    
+        async function fetchImg(){
+            await fetch(requestUrl)
+            .then(response => {
+                return response.json();            
+            })
+            .then(data => {
+                let newImg = data.results[0]? data.results[0].urls.regular : defaultImage;
+                img.src = newImg
+                img.classList.add('new-image')            
+            })     
+        }
         updatedDescription? description.innerText = updatedDescription : null;
     }
 }
