@@ -7,6 +7,8 @@ const travelButton = document.querySelector(".list-button");
 const travelList = document.querySelector(".travel-list");
 const defaultImage ="https://image.shutterstock.com/shutterstock/photos/1094945555/display_1500/stock-photo-blue-suitcase-with-sun-glasses-hat-and-camera-on-pastel-blue-background-travel-concept-minimal-1094945555.jpg";
 
+
+
 // Event Listeners
 form.addEventListener("submit", addPlace);
 
@@ -42,35 +44,53 @@ function addPlace(event) {
     placeDiv.appendChild(newPlace);
     console.log(newPlace)
 
+    
+
+    const requestUrl = 'https://api.unsplash.com/search/photos?query=' + newPlace.innerHTML + '-' + newDest.innerHTML+ '&client_id=Q41Uq_nT8K_r-7vPg_E035mTUIQwJbMvx18L9scLpfs';
     // Create Img
     const newImage = document.createElement('img');
-    newImage.src = (imageInput.value === "") ? defaultImage : imageInput.value; 
-    newImage.classList.add('new-image')
-    placeDiv.appendChild(newImage);
-    console.log(newImage.src);
+    description.addEventListener('click', fetchImg());
+    // newImage.src = (imageInput.value === "") ? defaultImage : imageInput.value; 
+    async function fetchImg(){
+        await fetch(requestUrl)
+        .then(response => {
+            return response.json();
+        })
+        .then(data => {
+            let img = data.results[0].urls.regular;
+            newImage.src = img;
+            newImage.classList.add('new-image')
+            
+        })
+    }
 
     
     //Edit Button
     const editButton = document.createElement('button');
     editButton.innerText = "Edit";
     editButton.classList.add("edit-btn");
-    placeDiv.appendChild(editButton);
+    
     
     //Delete Button
     const deleteButton = document.createElement('button');
     deleteButton.innerText = "Delete";
     deleteButton.classList.add("delete-btn");
-    placeDiv.appendChild(deleteButton);
+    
 
     //Append to list
+    placeDiv.appendChild(newImage);
+    placeDiv.appendChild(editButton);
+    placeDiv.appendChild(deleteButton);
+
     travelList.appendChild(placeDiv);
 
     //Clear travel input value
-    imageInput.value = "";
+   
     locationInput.value = "";
     destInput.value = "";
     descriptionInput.value = "";    
 }
+
 
 function deleteItem(e){
     const item = e.target;
