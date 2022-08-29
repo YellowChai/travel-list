@@ -9,8 +9,6 @@ const defaultImage ="https://image.shutterstock.com/shutterstock/photos/10949455
 
 // Event Listeners
 form.addEventListener("submit", addPlace);
-
-// Delete or Edit 
 travelList.addEventListener("click", deleteItem);
 
 //functions 
@@ -36,10 +34,11 @@ function addPlace(event) {
     newPlace.innerText = locationInput.value;
     newPlace.classList.add('new-place')
 
-    //Create img by fetching 
+    //Create img with API img
     const requestUrl = 'https://api.unsplash.com/search/photos?query=' + newPlace.innerHTML + '-' + newDest.innerHTML+ '&client_id=Q41Uq_nT8K_r-7vPg_E035mTUIQwJbMvx18L9scLpfs';
     const newImage = document.createElement('img');
     description.addEventListener('click', fetchImg());
+    
     async function fetchImg(){
         await fetch(requestUrl)
         .then(response => {
@@ -71,6 +70,7 @@ function addPlace(event) {
     placeDiv.appendChild(editButton);
     placeDiv.appendChild(deleteButton);
 
+    //Append the list to ul
     travelList.appendChild(placeDiv);
 
     //Clear travel input value
