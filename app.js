@@ -3,10 +3,12 @@ const locationInput = form.location
 const descriptionInput = form.description
 const destInput = form.destination
 const imgApiUrl = 'https://api.unsplash.com/search/photos?query='
+
 // const key = config.API_KEY
 const apiKey= "Q41Uq_nT8K_r-7vPg_E035mTUIQwJbMvx18L9scLpfs"
 const travelList = document.querySelector(".travel-list");
 const defaultImage ="https://image.shutterstock.com/shutterstock/photos/1094945555/display_1500/stock-photo-blue-suitcase-with-sun-glasses-hat-and-camera-on-pastel-blue-background-travel-concept-minimal-1094945555.jpg";
+let updatedImg 
 
 // Event Listeners
 form.addEventListener("submit", addPlace);
@@ -37,21 +39,16 @@ function addPlace(event) {
 
     //Create img with API img
     const requestUrl = imgApiUrl + newPlace.innerHTML + '-' + newDest.innerHTML+ '&client_id=' + apiKey;
-    const newImage = document.createElement('img');
-    description.addEventListener('click', fetchImg());
+    const newImg = document.createElement('img');
+    description.addEventListener('click', updateImg());
 
-    async function fetchImg(){
-        await fetch(requestUrl)
-        .then(response => {
-            return response.json();            
-        })
-        .then(data => {
-            let img = data.results[0]? data.results[0].urls.regular : defaultImage;
-            newImage.src = img 
-            newImage.classList.add('new-image')            
-        })     
-    }
- 
+    //Call fetch function to update the image
+    async function updateImg() {
+        await fetchImg(requestUrl)
+            newImg.src = updatedImg;
+            newImg.classList.add('new-image')
+        }
+    
     //Edit Button
     const editButton = document.createElement('button');
     editButton.innerText = "Edit";
@@ -66,7 +63,7 @@ function addPlace(event) {
     placeDiv.appendChild(newDest);
     placeDiv.appendChild(newPlace);
     placeDiv.appendChild(newDescription);
-    placeDiv.appendChild(newImage);
+    placeDiv.appendChild(newImg);
     placeDiv.appendChild(editButton);
     placeDiv.appendChild(deleteButton);
 
@@ -90,39 +87,51 @@ function deleteItem(e){
     }
 }
 
-function editItem(e){
+function editItem(e) {
     const item = e.target;
     //Edit list
     if(item.classList[0] === 'edit-btn'){
         const list = item.parentElement;
         const dest = list.querySelector(".new-dest");
         const location = list.querySelector(".new-place");
-        const img = list.querySelector(".new-image");
+        const newImg = list.querySelector(".new-image");
         const description = list.querySelector(".new-description");
 
+        //window prompts
         const updatedDest = window.prompt("Enter new Destination");
         const updatedLocation = window.prompt("Enter new Location");
         const updatedDescription = window.prompt("Enter new description"); 
         
+        //update destination and location 
         updatedDest? dest.innerText = updatedDest : null;
         updatedLocation? location.innerText = updatedLocation : null;
 
         const requestUrl = imgApiUrl + location.innerHTML + '-' + dest.innerHTML+ '&client_id=' + apiKey;
-        window.addEventListener('change', fetchImg());
-    
-        async function fetchImg(){
-            await fetch(requestUrl)
-            .then(response => {
-                return response.json();            
-            })
-            .then(data => {
-                let newImg = data.results[0]? data.results[0].urls.regular : defaultImage;
-                img.src = newImg
-                img.classList.add('new-image')           
-            })     
-        }
+        //eventlistener
+        window.addEventListener('change', updateImg())
+
+        //calling fetchImg function and update the img
+        async function updateImg() {
+            await fetchImg(requestUrl)
+                newImg.src = updatedImg;
+                newImg.classList.add('new-image')
+            }
+        
+        // update description    
         updatedDescription? description.innerText = updatedDescription : null; 
         
-    }
+    }    
 }
 
+// fetch image 
+async function fetchImg(url){
+    await fetch(url)
+    .then(response => {
+        console.log(url)
+        return response.json();   
+    })
+    .then(data => {
+        updatedImg = data.results[0]? data.results[0].urls.regular : defaultImage;
+        console.log(updatedImg)  
+    })     
+}
