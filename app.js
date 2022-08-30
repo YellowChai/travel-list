@@ -3,7 +3,8 @@ const locationInput = form.location
 const descriptionInput = form.description
 const destInput = form.destination
 const imgApiUrl = 'https://api.unsplash.com/search/photos?query='
-var key = config.API_KEY
+const key = config.API_KEY
+const apiKey= "Q41Uq_nT8K_r-7vPg_E035mTUIQwJbMvx18L9scLpfs"
 const travelList = document.querySelector(".travel-list");
 const defaultImage ="https://image.shutterstock.com/shutterstock/photos/1094945555/display_1500/stock-photo-blue-suitcase-with-sun-glasses-hat-and-camera-on-pastel-blue-background-travel-concept-minimal-1094945555.jpg";
 
@@ -35,7 +36,7 @@ function addPlace(event) {
     newPlace.classList.add('new-place')
 
     //Create img with API img
-    const requestUrl = imgApiUrl + newPlace.innerHTML + '-' + newDest.innerHTML+ '&client_id=' + key;
+    const requestUrl = imgApiUrl + newPlace.innerHTML + '-' + newDest.innerHTML+ '&client_id=' + apiKey;
     const newImage = document.createElement('img');
     description.addEventListener('click', fetchImg());
 
@@ -106,7 +107,7 @@ function editItem(e){
         updatedDest? dest.innerText = updatedDest : null;
         updatedLocation? location.innerText = updatedLocation : null;
 
-        const requestUrl = imgApiUrl + location.innerHTML + '-' + dest.innerHTML+ '&client_id=' + key;
+        const requestUrl = imgApiUrl + location.innerHTML + '-' + dest.innerHTML+ '&client_id=' + apiKey;
         window.addEventListener('change', fetchImg());
     
         async function fetchImg(){
