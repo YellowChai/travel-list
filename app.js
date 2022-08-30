@@ -2,7 +2,8 @@ const form = document.getElementById('form')
 const locationInput = form.location
 const descriptionInput = form.description
 const destInput = form.destination
-
+const imgApiUrl = 'https://api.unsplash.com/search/photos?query='
+var key = config.API_KEY
 const travelList = document.querySelector(".travel-list");
 const defaultImage ="https://image.shutterstock.com/shutterstock/photos/1094945555/display_1500/stock-photo-blue-suitcase-with-sun-glasses-hat-and-camera-on-pastel-blue-background-travel-concept-minimal-1094945555.jpg";
 
@@ -34,7 +35,7 @@ function addPlace(event) {
     newPlace.classList.add('new-place')
 
     //Create img with API img
-    const requestUrl = 'https://api.unsplash.com/search/photos?query=' + newPlace.innerHTML + '-' + newDest.innerHTML+ '&client_id=Q41Uq_nT8K_r-7vPg_E035mTUIQwJbMvx18L9scLpfs';
+    const requestUrl = imgApiUrl + newPlace.innerHTML + '-' + newDest.innerHTML+ '&client_id=' + key;
     const newImage = document.createElement('img');
     description.addEventListener('click', fetchImg());
 
@@ -73,8 +74,8 @@ function addPlace(event) {
 
     //Clear travel input value
     locationInput.value = "";
-    destInput.value = "";
     descriptionInput.value = "";    
+    destInput.value = "";
 }
 
 function deleteItem(e){
@@ -104,9 +105,8 @@ function editItem(e){
         
         updatedDest? dest.innerText = updatedDest : null;
         updatedLocation? location.innerText = updatedLocation : null;
-        // updatedImg? img.src = updatedImg : null;
 
-        const requestUrl = 'https://api.unsplash.com/search/photos?query=' + updatedDest + '-' + updatedLocation+ '&client_id=Q41Uq_nT8K_r-7vPg_E035mTUIQwJbMvx18L9scLpfs';
+        const requestUrl = imgApiUrl + location.innerHTML + '-' + dest.innerHTML+ '&client_id=' + key;
         window.addEventListener('change', fetchImg());
     
         async function fetchImg(){
@@ -117,10 +117,11 @@ function editItem(e){
             .then(data => {
                 let newImg = data.results[0]? data.results[0].urls.regular : defaultImage;
                 img.src = newImg
-                img.classList.add('new-image')            
+                img.classList.add('new-image')           
             })     
         }
-        updatedDescription? description.innerText = updatedDescription : null;
+        updatedDescription? description.innerText = updatedDescription : null; 
+        
     }
 }
 

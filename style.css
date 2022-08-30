@@ -78,34 +78,37 @@ label {
     display: flex;
     flex-direction: column;
     margin: 3%;
-    min-width: 40%;
+    min-width: 60%;
  
 } 
 
 .travel-list {
     display: flex;
-    /* min-width: 20%; */
     list-style: none;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content:flex-start;
     flex-wrap: wrap;
-    padding-left: 5%;    
+    padding-left: 5%;  
+    min-width: 60%;  
 }
 
 .place {
-    margin:1rem;
+    margin:0.8rem;
     background: white;
     color: black;
     font-size: 1.5rem;
     display: flex;
-
+    max-width: 15rem; 
     align-items: center;
     flex-direction: column;    
 }
 
 .place li{
     font-size: 70%;
+    min-width: 13rem;
+    display: block;
+    text-align: center;
 }
 
 .edit-btn,
@@ -121,14 +124,15 @@ label {
 }
 
 .new-place{
-    padding: 0rem 0.5rem;
+    padding: 0rem 1rem;
 }
 
 .new-image{
     border-radius: 8px;
-    width: 300px;
-    height: 225px; 
-    padding: 5px;
-}
+    /* min-width: 12rem; */
+    width: 90%;
+    height: 14rem; 
+    padding: 5px; 
+} 
 
 
