@@ -3,7 +3,7 @@ const locationInput = form.location
 const descriptionInput = form.description
 const destInput = form.destination
 const imgApiUrl = 'https://api.unsplash.com/search/photos?query='
-const key = config.API_KEY
+// const key = config.API_KEY
 const apiKey= "Q41Uq_nT8K_r-7vPg_E035mTUIQwJbMvx18L9scLpfs"
 const travelList = document.querySelector(".travel-list");
 const defaultImage ="https://image.shutterstock.com/shutterstock/photos/1094945555/display_1500/stock-photo-blue-suitcase-with-sun-glasses-hat-and-camera-on-pastel-blue-background-travel-concept-minimal-1094945555.jpg";
