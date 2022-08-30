@@ -24,8 +24,12 @@ function addPlace(event) {
 
     //Create dest List
     const newDest = document.createElement("li");
+    const destLabel = document.createElement("LABEL");
+    destLabel.innerText = "Destination:"
+    newDest.appendChild(destLabel);
     newDest.innerText = destInput.value;
     newDest.classList.add('new-dest')
+    
 
     //Create description List
     const newDescription = document.createElement('li');
@@ -47,25 +51,30 @@ function addPlace(event) {
         await fetchImg(requestUrl)
             newImg.src = updatedImg;
             newImg.classList.add('new-image')
-        }
-    
+        } 
+
+    const btnList = document.createElement('li')
+    btnList.classList.add('btn-list')
+
     //Edit Button
     const editButton = document.createElement('button');
     editButton.innerText = "Edit";
     editButton.classList.add("edit-btn");
+    btnList.appendChild(editButton)
       
     //Delete Button
     const deleteButton = document.createElement('button');
     deleteButton.innerText = "Delete";
     deleteButton.classList.add("delete-btn"); 
+    btnList.appendChild(deleteButton)
 
     //Append to list
     placeDiv.appendChild(newDest);
     placeDiv.appendChild(newPlace);
     placeDiv.appendChild(newDescription);
     placeDiv.appendChild(newImg);
-    placeDiv.appendChild(editButton);
-    placeDiv.appendChild(deleteButton);
+    placeDiv.appendChild(btnList);
+
 
     //Append the list to ul
     travelList.appendChild(placeDiv);
@@ -80,7 +89,7 @@ function deleteItem(e){
     const item = e.target;
     // Delete list
     if(item.classList[0] === 'delete-btn'){
-        const place = item.parentElement;
+        const place = item.parentElement.parentElement;
         place.remove();
     }else if(item.classList[0] === 'edit-btn'){
         editItem(e);
@@ -91,7 +100,7 @@ function editItem(e) {
     const item = e.target;
     //Edit list
     if(item.classList[0] === 'edit-btn'){
-        const list = item.parentElement;
+        const list = item.parentElement.parentElement;
         const dest = list.querySelector(".new-dest");
         const location = list.querySelector(".new-place");
         const newImg = list.querySelector(".new-image");
