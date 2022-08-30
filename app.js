@@ -134,13 +134,13 @@ function editItem(e) {
 
 // fetch image 
 async function fetchImg(url){
-    await fetch(url)
-    .then(response => {
-        console.log(url)
-        return response.json();   
-    })
-    .then(data => {
-        updatedImg = data.results[0]? data.results[0].urls.regular : defaultImage;
-        console.log(updatedImg)  
-    })     
+
+    try{
+    let response = await fetch(url);
+    let data = await response.json();
+    updatedImg = data.results[0]? data.results[0].urls.regular : defaultImage;
+    console.log(updatedImg)    
+    }catch(err) {
+        alert(err)
+    }
 }
