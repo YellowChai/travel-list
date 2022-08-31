@@ -63,11 +63,12 @@ async function addPlace(event) {
     btnList.appendChild(deleteButton)
     deleteButton.addEventListener("click", deleteItem);
 
-    //Comment Button
-    const commentButton = document.createElement('button');
-    commentButton.innerText = "Comment";
-    commentButton.classList.add("comment-btn"); 
-    btnList.appendChild(commentButton)
+    //gif Button
+    const gifButton = document.createElement('button');
+    gifButton.innerText = "GIF";
+    gifButton.classList.add("gif-btn"); 
+    btnList.appendChild(gifButton)
+    gifButton.addEventListener("click", addGif);
 
     //Append to list
     placeDiv.appendChild(newDest);
@@ -77,6 +78,7 @@ async function addPlace(event) {
     placeDiv.appendChild(btnList);
 
     //Append the list to ul
+    
     travelList.appendChild(placeDiv);
 
     //Clear travel input value
@@ -118,6 +120,29 @@ async function editItem(e) {
     // update description    
     updatedDescription? description.innerText = updatedDescription : null; 
               
+}
+
+function addGif(){
+    console.log('clicked')
+    var newDiv = document.createElement('DIV');
+    newDiv.id='div'
+    var textContent = document.createTextNode('Hi! I am a modal popup created by pure javascript');
+    newDiv.appendChild(textContent);
+    var newcloseButton= document.createElement('button');
+    var newContent = document.createTextNode('X');
+    newcloseButton.appendChild(newContent);
+    newcloseButton.id='btn';
+    newDiv.setAttribute('style', 'border:3px solid;height: 150px; width: 380px; top: 741px; left: 491px; padding:10px; margin: 50px;background:red; text-align: center;vertical-align: middle;line-height: 140px;');
+    newcloseButton.setAttribute('style', 'border :1px solid; height: 15px; width:20px; top: 6px; left: 4px; float: right; margin: 0px; padding:0px; clear: both; float:right;font-size:11px;');
+
+newDiv.appendChild(newcloseButton);
+travelList.appendChild(newDiv).appendChild(newcloseButton);
+
+newcloseButton.onclick = function remove(btn)
+{
+newDiv.parentElement.removeChild(newDiv);
+}
+
 }
 
 
