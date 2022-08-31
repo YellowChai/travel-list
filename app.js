@@ -1,23 +1,20 @@
 const form = document.getElementById('form')
+const travelList = document.querySelector(".travel-list");
 // const key = config.API_KEY
 const apiKey= "Q41Uq_nT8K_r-7vPg_E035mTUIQwJbMvx18L9scLpfs"
-const travelList = document.querySelector(".travel-list");
-const defaultImage ="https://image.shutterstock.com/shutterstock/photos/1094945555/display_1500/stock-photo-blue-suitcase-with-sun-glasses-hat-and-camera-on-pastel-blue-background-travel-concept-minimal-1094945555.jpg";
 const imgApiUrl = "https://api.unsplash.com/search/photos?query="
 let updatedImg 
-// let requestUrl
+
 
 // Event Listeners
 form.addEventListener("submit", addPlace);
-travelList.addEventListener("click", buttonHandler);
 
 //functions 
 async function addPlace(event) {
     const destInput = form.destination
     const locationInput = form.location
     const descriptionInput = form.description
-    
-  
+      
     event.preventDefault();
 
     //place Div
@@ -57,12 +54,14 @@ async function addPlace(event) {
     editButton.innerText = "Edit";
     editButton.classList.add("edit-btn");
     btnList.appendChild(editButton)
+    editButton.addEventListener("click", editItem);
       
     //Delete Button
     const deleteButton = document.createElement('button');
     deleteButton.innerText = "Delete";
     deleteButton.classList.add("delete-btn"); 
     btnList.appendChild(deleteButton)
+    deleteButton.addEventListener("click", deleteItem);
 
     //Comment Button
     const commentButton = document.createElement('button');
@@ -77,7 +76,6 @@ async function addPlace(event) {
     placeDiv.appendChild(newImg);
     placeDiv.appendChild(btnList);
 
-
     //Append the list to ul
     travelList.appendChild(placeDiv);
 
@@ -85,18 +83,6 @@ async function addPlace(event) {
     locationInput.value = "";
     descriptionInput.value = "";    
     destInput.value = "";
-}
-
-function buttonHandler(e){
-    const item = e.target;
-    // Delete list
-    if(item.classList[0] === 'delete-btn'){
-        deleteItem(e)
-    }else if(item.classList[0] === 'edit-btn'){
-        editItem(e);
-    }else if(item.classList[0] === 'comment-btn'){
-        console.log("working")
-    }
 }
 
 function deleteItem(e){
@@ -128,7 +114,6 @@ async function editItem(e) {
     // update image by fetching 
     await fetchImg(requestUrl)
     img.src = updatedImg;
-    img.classList.add('new-image')
     
     // update description    
     updatedDescription? description.innerText = updatedDescription : null; 
@@ -138,6 +123,8 @@ async function editItem(e) {
 
 // fetch image 
 async function fetchImg(url){
+    const defaultImage ="https://image.shutterstock.com/shutterstock/photos/1094945555/display_1500/stock-photo-blue-suitcase-with-sun-glasses-hat-and-camera-on-pastel-blue-background-travel-concept-minimal-1094945555.jpg";
+    
     try{
         let response = await fetch(url);
         let data = await response.json();
