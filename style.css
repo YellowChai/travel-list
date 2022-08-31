@@ -144,4 +144,18 @@ label {
     padding: 5px; 
 } 
 
+.gif-div{
+    border:3px solid;
+    height: 150px; 
+    width: 380px; 
+    top: 741px; 
+    left: 491px; 
+    padding:10px; 
+    margin: 50px;
+    background:white; 
+    text-align: center;
+    vertical-align: middle;
+    line-height: 140px;
+}
+
 
