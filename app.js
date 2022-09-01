@@ -175,7 +175,7 @@ async function fetchImg(url){
 async function fetchGif(location){
     
     console.log(location)
-    const requestUrl = "http://api.giphy.com/v1/gifs/search?q=" + location + "&api_key=mA2K39iuyksOKsneLEI9WmxkHyTFfdcf&limit=6"
+    const requestUrl = "https://api.giphy.com/v1/gifs/search?q=" + location + "&api_key=mA2K39iuyksOKsneLEI9WmxkHyTFfdcf&limit=6"
 
     try{
         let response = await fetch(requestUrl);
