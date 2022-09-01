@@ -125,40 +125,40 @@ async function editPlace(e) {
 async function addGif(e){
     const item = e.target;
     console.log('clicked')
-    const gifDiv = document.createElement('DIV');
-    gifDiv.classList.add("gif-div"); 
-
-    const list = item.parentElement.parentElement;
+    const list = item.parentElement.parentElement;    
+    const location = list.querySelector('.new-place').innerHTML
     const img = list.querySelector(".new-image");
-    await fetchGif()
 
+    await fetchGif(location)
     img.src = updatedImg;
-
-
-    var textContent = document.createTextNode('Hi! I am a modal popup created by pure javascript');
-    gifDiv.appendChild(textContent);
-    var newcloseButton= document.createElement('button');
-    var newContent = document.createTextNode('X');
-    newcloseButton.appendChild(newContent);
-    newcloseButton.id='btn';
-    // gifDiv.setAttribute('style', 'border:3px solid;height: 150px; width: 380px; top: 741px; left: 491px; padding:10px; margin: 50px;background:red; text-align: center;vertical-align: middle;line-height: 140px;');
-    newcloseButton.setAttribute('style', 'border :1px solid; height: 15px; width:20px; top: 6px; left: 4px; float: right; margin: 0px; padding:0px; clear: both; float:right;font-size:11px;');
-
-    gifDiv.appendChild(newcloseButton);
-    travelList.appendChild(gifDiv).appendChild(newcloseButton);
-
-    newcloseButton.onclick = function remove(btn)
-    {
-    gifDiv.parentElement.removeChild(gifDiv);
-    }
-
 }
+
+
+//     var textContent = document.createTextNode('Hi! I am a modal popup created by pure javascript');
+//     gifDiv.appendChild(textContent);
+//     var newcloseButton= document.createElement('button');
+//     var newContent = document.createTextNode('X');
+//     newcloseButton.appendChild(newContent);
+//     newcloseButton.id='btn';
+//     // gifDiv.setAttribute('style', 'border:3px solid;height: 150px; width: 380px; top: 741px; left: 491px; padding:10px; margin: 50px;background:red; text-align: center;vertical-align: middle;line-height: 140px;');
+//     newcloseButton.setAttribute('style', 'border :1px solid; height: 15px; width:20px; top: 6px; left: 4px; float: right; margin: 0px; padding:0px; clear: both; float:right;font-size:11px;');
+
+//     gifDiv.appendChild(newcloseButton);
+//     travelList.appendChild(gifDiv).appendChild(newcloseButton);
+
+//     newcloseButton.onclick = function remove(btn)
+//     {
+//     gifDiv.parentElement.removeChild(gifDiv);
+//     }
+
+// }
 
 
 // fetch image 
 async function fetchImg(url){
-    const defaultImage ="https://image.shutterstock.com/shutterstock/photos/1094945555/display_1500/stock-photo-blue-suitcase-with-sun-glasses-hat-and-camera-on-pastel-blue-background-travel-concept-minimal-1094945555.jpg";
     
+    const defaultImage ="https://image.shutterstock.com/shutterstock/photos/1094945555/display_1500/stock-photo-blue-suitcase-with-sun-glasses-hat-and-camera-on-pastel-blue-background-travel-concept-minimal-1094945555.jpg";
+
     try{
         let response = await fetch(url);
         let data = await response.json();
@@ -171,16 +171,20 @@ async function fetchImg(url){
     }
 }
 
-async function fetchGif(){
-    const requestUrl = "http://api.giphy.com/v1/gifs/search?q=happy&api_key=mA2K39iuyksOKsneLEI9WmxkHyTFfdcf&limit=6"
+//fetch Giphy based on the location in the list 
+async function fetchGif(location){
     
+    console.log(location)
+    const requestUrl = "http://api.giphy.com/v1/gifs/search?q=" + location + "&api_key=mA2K39iuyksOKsneLEI9WmxkHyTFfdcf&limit=6"
+
     try{
         let response = await fetch(requestUrl);
         let data = await response.json();
         console.log(requestUrl)
         console.log(data.data[0].images.original.url)
         updatedImg = data.data[0].images.original.url;
-        console.log(updatedImg)    
+        console.log(updatedImg)
+
     }catch(err) {
         alert(err)
     }
