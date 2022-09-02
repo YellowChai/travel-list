@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <title>Travel List</title>
+</head>
+<body>
+    <header>
+        <h1> Vacation Destination WishList </h1>
+        <p>Found exciting places to visit on your next vacation? Use the form below to add them to your wishlist</p>
+    </header>
+
+    <div class="content">
+    <!-- <form action="/wishlist" method="POST"> -->
+    <form name = "form" onsubmit="event.preventDefault();">
+        <div class="user-input">
+            <label for="destination"> Destination </label>
+            <input name= "destination" type="text" requried minlength="2" required/>
+        </div>
+        <div class="user-input">
+            <label for="location"> Location </label>
+            <input name="location" type="text" requried minlength="2" required/>
+        </div>
+        <div class="user-input">
+            <label for="description"> Description </label>
+            <input name = "description"type="text" requried minlength="2" required/>
+        </div>
+
+        <button class="submit-button" type="submit"> submit </button>             
+    </form>
+
+    <div class="travel-container">
+        <h3>Destination Details</h3>
+        <ul class="travel-list"> 
+        <% for(let i = 0; i < place.length; i++) { %>  
+            
+            <li class="place">
+              
+                <span class="dest"><%= place[i].destination %></span>
+                <span class="location"><%= place[i].location %></span>
+                <span class="description"><%= place[i].description %></span>
+                <img src=" <%= place[i].img %>"  class="img">
+                    <div class ="btn-list">
+                        <button id="edit-button"> Edit</button>
+                        <button id="delete-button"> Delete</button>
+                        <button id="gif-button"> GIF</button>
+                    </div>         
+            </li>
+        <% } %>
+        </ul>
+    </div> 
+    
+    <div id="message"></idv>
+</div>
+     
+    <script type="module" src="/app.js"></script>
+    <script type="text" src="/server.js"></script>
+    <!-- <script type="text/javascript" src="config.js"></script> -->
+    
+</body>
