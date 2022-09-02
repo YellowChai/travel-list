@@ -1,7 +1,8 @@
-
+// require('dotenv').config();
 const form = document.querySelector('form')
 let editButton = document.querySelectorAll("#edit-button")
 let deleteButton = document.querySelectorAll("#delete-button")
+let gifButton = document.querySelectorAll("#gif-button")
 const messageDiv = document.querySelector('#message')
 
 // let apiKey= process.env.API_KEY;
@@ -21,6 +22,11 @@ deleteButton.forEach(btn => btn.addEventListener("click", (e) => {
     
     deletePlace(e)
 }))
+gifButton.forEach(btn => btn.addEventListener("click", (e) => {
+    
+    addGif(e)
+}))
+
 // editButton.addEventListener('click', editPlace)
 
 async function editPlace(e){
@@ -33,15 +39,8 @@ async function editPlace(e){
     const updatedDest = window.prompt("Enter new Destination");
     const updatedLocation = window.prompt("Enter new Location");
     const updatedDescription = window.prompt("Enter new description"); 
-    
-    //Create img with API img
-    // const requestUrl = imgApiUrl + updatedDest+ '-' + updatedLocation+ '&client_id=' + apiKey;
+
     console.log(updatedDest)
-    // const newImg = document.createElement('img');
-
-    // await fetchImg(requestUrl);
-    // newImg.src = updatedImg;
-
 
     const url = "/" + dest.innerText + "/wishlist/edit"
     console.log(url)
@@ -52,11 +51,9 @@ async function editPlace(e){
         body: JSON.stringify({
             destination: updatedDest,
             location: updatedLocation,
-            description: updatedDescription,
-            // img: newImg.src
-            
-        })
-        
+            description: updatedDescription, 
+            img: "image"         
+        })        
     })
         .then(res => {
             if (res.ok) return res.json()
@@ -95,9 +92,6 @@ function deletePlace(e){
     .catch()
 }
 
-
-
-
 // Event Listeners
 form.addEventListener("submit", addPlace);
 
@@ -105,21 +99,14 @@ form.addEventListener("submit", addPlace);
 async function addPlace(event) {
       
     event.preventDefault();
-
+    console.log("hit")
     //Create img with API img
+    const destInput = document.getElementsByName('destination')[0]
     
-    const destination = document.getElementsByName('destination')[0].value
+    const destination = destInput.value
     const location = document.getElementsByName('location')[0].value
-    const description = document.getElementsByName('description')[0].value
- 
-    // const requestUrl = imgApiUrl + destination+ '-' + location+ '&client_id=' + apiKey;
-    // console.log(requestUrl)
-    // const newImg = document.createElement('img');
-    const place = document.querySelector('.place')
-    // await fetchImg(requestUrl);
-    // newImg.src = updatedImg;
-    
-    
+    const description = document.getElementsByName('description')[0].value    
+
     await fetch('/wishList', {
         
         method: 'post',
@@ -127,61 +114,53 @@ async function addPlace(event) {
         body: JSON.stringify({
             destination: destination,
             location: location,
-            description: description,
-            // img: newImg.src
-            
+            description: description, 
+            img: 'image'           
         })
     })
-    
         .then(res => {
             if (res.ok) return res.json()
         })
         .then(response => {
-            console.log(response)
-            // window.location.reload(true)
+            console.log("we are here ")
+            window.location = window.location.href;
         })
-    
-
-    
-
-            //create lists for edit and delete button
-    const btnList = document.querySelector('btn-list')
- 
-
-        const editButton = document.createElement('button');
-        editButton.innerText = "Edit";
-        editButton.classList.add("edit-button");
-        btnList.appendChild(editButton)
-        editButton.addEventListener("click", editPlace);
-        
-
-
-    //gif Button
-    // const gifButton = document.createElement('button');
-    // gifButton.innerText = "GIF";
-    // gifButton.classList.add("gif-button"); 
-    // buttonList.appendChild(gifButton)
-    // gifButton.addEventListener("click", addGif);
-
-    //Append to list
-    // placeDiv.appendChild(newDest);
-    // placeDiv.appendChild(newPlace);
-    // placeDiv.appendChild(newDescription);
-    document.querySelector('.img').appendChild(newImg);
-    form.reset()
 }
 
+   
 
-// async function addGif(e){
-//     const item = e.target;
-//     console.log('clicked')
-//     const list = item.parentElement.parentElement;    
-//     const location = list.querySelector('.new-place').innerHTML
-//     const img = list.querySelector(".new-image");
 
-//     await fetchGif(location)
-//     img.src = updatedImg;
-// }
+
+async function addGif(e){
+    const item = e.target;
+    console.log('clicked')
+    const list = item.parentElement.parentElement;    
+    const dest = list.querySelector(".dest");
+    const loc = list.querySelector(".location")
+    const desc = list.querySelector(".description")
+    const url = "/" + dest.innerText + "/wishlist/edit"
+    
+    const destData = dest.innerText
+    const locData = loc.innerText
+    const desData = desc.innerText
+    await fetch(url, {
+        method: 'put',
+        headers: { 'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            destination: destData,
+            location: locData,
+            description: desData, 
+            img: "gify"      
+        })        
+    })
+    .then(res => {
+        if (res.ok) return res.json()
+    })
+    .then(response => {
+        console.log(response)
+        window.location.reload(true)
+    })   
+}
 
 
 // //     var textContent = document.createTextNode('Hi! I am a modal popup created by pure javascript');
@@ -203,68 +182,6 @@ async function addPlace(event) {
 
 // // }
 
-
-// // fetch image 
-// async function fetchImg(url){
-    
-//     const defaultImage ="https://image.shutterstock.com/shutterstock/photos/1094945555/display_1500/stock-photo-blue-suitcase-with-sun-glasses-hat-and-camera-on-pastel-blue-background-travel-concept-minimal-1094945555.jpg";
-
-//     try{
-//         let response = await fetch(url);
-//         let data = await response.json();
-//         console.log(url)
-//         console.log(data.results[0].urls.regular)
-//         updatedImg = data.results[0]? data.results[0].urls.regular : defaultImage;
-//         console.log(updatedImg)    
-//     }catch(err) {
-//         alert(err)
-//     }
-// }// // fetch image 
-// async function fetchImg(url){
-    
-//     const defaultImage ="https://image.shutterstock.com/shutterstock/photos/1094945555/display_1500/stock-photo-blue-suitcase-with-sun-glasses-hat-and-camera-on-pastel-blue-background-travel-concept-minimal-1094945555.jpg";
-
-//     try{
-//         let response = await fetch(url);
-//         let data = await response.json();
-//         console.log(url)
-//         console.log(data.results[0].urls.regular)
-//         updatedImg = data.results[0]? data.results[0].urls.regular : defaultImage;
-//         console.log(updatedImg)    
-//     }catch(err) {
-//         alert(err)
-//     }
-// }// // fetch image 
-// async function fetchImg(url){
-    
-//     const defaultImage ="https://image.shutterstock.com/shutterstock/photos/1094945555/display_1500/stock-photo-blue-suitcase-with-sun-glasses-hat-and-camera-on-pastel-blue-background-travel-concept-minimal-1094945555.jpg";
-
-//     try{
-//         let response = await fetch(url);
-//         let data = await response.json();
-//         console.log(url)
-//         console.log(data.results[0].urls.regular)
-//         updatedImg = data.results[0]? data.results[0].urls.regular : defaultImage;
-//         console.log(updatedImg)    
-//     }catch(err) {
-//         alert(err)
-//     }
-// }// // fetch image 
-// async function fetchImg(url){
-    
-//     const defaultImage ="https://image.shutterstock.com/shutterstock/photos/1094945555/display_1500/stock-photo-blue-suitcase-with-sun-glasses-hat-and-camera-on-pastel-blue-background-travel-concept-minimal-1094945555.jpg";
-
-//     try{
-//         let response = await fetch(url);
-//         let data = await response.json();
-//         console.log(url)
-//         console.log(data.results[0].urls.regular)
-//         updatedImg = data.results[0]? data.results[0].urls.regular : defaultImage;
-//         console.log(updatedImg)    
-//     }catch(err) {
-//         alert(err)
-//     }
-// }
 
 // //fetch Giphy based on the location in the list 
 // async function fetchGif(location){

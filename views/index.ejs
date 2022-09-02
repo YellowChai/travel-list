@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,7 +15,7 @@
 
     <div class="content">
     <!-- <form action="/wishlist" method="POST"> -->
-    <form>
+    <form name = "form" onsubmit="event.preventDefault();">
         <div class="user-input">
             <label for="destination"> Destination </label>
             <input name= "destination" type="text" requried minlength="2" required/>
@@ -38,23 +37,23 @@
         <ul class="travel-list"> 
         <% for(let i = 0; i < place.length; i++) { %>  
             
-            <div class="place">
+            <li class="place">
+              
                 <span class="dest"><%= place[i].destination %></span>
-                <span><%= place[i].location %></span>
-                <span><%= place[i].description %></span>
+                <span class="location"><%= place[i].location %></span>
+                <span class="description"><%= place[i].description %></span>
                 <img src=" <%= place[i].img %>"  class="img">
-                <li class ="btn-list">
-                <button id="edit-button"> Edit</button>
-                <button id="delete-button"> Delete</button>
-                <button id="gif-button"> GIF</button>
-                </li>
-            </div>
-        </div> 
-            <% } %>
+                    <div class ="btn-list">
+                        <button id="edit-button"> Edit</button>
+                        <button id="delete-button"> Delete</button>
+                        <button id="gif-button"> GIF</button>
+                    </div>         
+            </li>
+        <% } %>
         </ul>
     </div> 
     
-    <idv id="message"></idv>
+    <div id="message"></idv>
 </div>
      
     <script type="module" src="/app.js"></script>
@@ -62,4 +61,3 @@
     <!-- <script type="text/javascript" src="config.js"></script> -->
     
 </body>
-</html>

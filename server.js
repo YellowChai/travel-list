@@ -4,14 +4,17 @@ const app = express()
 const axios = require('axios')
 require('dotenv').config();
 
-let apiKey= process.env.API_KEY;
+let imgApiKey= process.env.API_KEY;
+let gifApiKey=process.env.GIPHY_API_KEY;
+let mongoDbKey = process.env.MONGO_DB_KEY;
 const imgApiUrl = "https://api.unsplash.com/search/photos?query="
+const giphyApiUrl = "https://api.giphy.com/v1/gifs/search?q="
 let updatedImg;
 
 
 const MongoClient = require('mongodb').MongoClient
 
-MongoClient.connect("mongodb+srv://aklee213:Ayala!%4006@cluster0.z8twpwf.mongodb.net/?retryWrites=true&w=majority")
+MongoClient.connect("mongodb+srv://"+ mongoDbKey + "@cluster0.z8twpwf.mongodb.net/?retryWrites=true&w=majority")
     .then(client => {
         console.log('Connected to Database')
         const db = client.db('travel-wishlist')
@@ -20,11 +23,10 @@ MongoClient.connect("mongodb+srv://aklee213:Ayala!%4006@cluster0.z8twpwf.mongodb
         app.use(bodyParser.json())
         app.use(express.static('public'))
 
-        console.log('server connected')
-
         app.set('view engine', 'ejs')
         // res.render(view, locals)
 
+        // get 
         app.get('/', (req, res) => {
             db.collection('place').find().toArray()
             .then(results => {                
@@ -34,28 +36,40 @@ MongoClient.connect("mongodb+srv://aklee213:Ayala!%4006@cluster0.z8twpwf.mongodb
             
         })
 
+        //post 
         app.post('/wishlist', async (req, res) => {
             console.log(req.body)
-            const url = imgApiUrl + req.body.destination+ '-' + req.body.location+ '&client_id=' + apiKey;
+            const url = imgApiUrl + req.body.destination+ '-' + req.body.location+ '&client_id=' + imgApiKey;
             await fetchImg(url)
             placeCollection.insertOne({                
                 destination: req.body.destination,
                 location: req.body.location,
                 description: req.body.description,
                 img: updatedImg
-            })
+            },)
             .then(result => {
-                res.redirect('/')
-                console.log(req.body)
+                // res.redirect('/')
+                res.json('server hit')
             })
             .catch(error => console.error(error))
         })
 
+
+        // put
         app.put('/:id/wishlist/edit', async (req, res) => {
             console.log(req.params.id)
-            const url = imgApiUrl + req.body.destination+ '-' + req.body.location+ '&client_id=' + apiKey;
-            await fetchImg(url)
-            placeCollection.findOneAndUpdate(
+            let unsplashUrl = imgApiUrl + req.body.destination+ '-' + req.body.location+ '&client_id=' + imgApiKey;
+            let gifUrl = giphyApiUrl + req.body.location + "&api_key=" + gifApiKey
+            console.log("printing here", req.body.img.toString())
+            if (req.body.img == "image"){
+                console.log("true")
+                await fetchImg(unsplashUrl)
+            }else {
+                await fetchGif(gifUrl)
+            }
+            console.log("check", updatedImg)
+
+            await placeCollection.findOneAndUpdate(
                 { destination: req.params.id },
                 {
                     $set: {                        
@@ -65,12 +79,6 @@ MongoClient.connect("mongodb+srv://aklee213:Ayala!%4006@cluster0.z8twpwf.mongodb
                         img: updatedImg
                     }
                 },
-                // options
-                // options tells MongoDB to define additional options for this update request 
-                {
-                    // insert a document if no documents can be updated 
-                    // upsert: true
-                }
             )
             .then(result =>{
                 res.json('Edit Success')
@@ -78,17 +86,18 @@ MongoClient.connect("mongodb+srv://aklee213:Ayala!%4006@cluster0.z8twpwf.mongodb
             })
             .catch(error => console.error(error))
         })
-
+        
+        //delete
         app.delete('/:id/wishlist/delete', (req, res) => {
             placeCollection.deleteOne(
-                { destination: req.params.id },
+                { destination: req.params.id},
                 // no need to change any options, so omit options
             )
             .then(result => {
                 if (result.deletedCount === 0) {
                     return res.json('No place to delete')
                 }
-                res.json('Deleted japan')
+                res.json('Deleted')
             })
             .catch(error => console.error(error))
         })
@@ -103,24 +112,29 @@ MongoClient.connect("mongodb+srv://aklee213:Ayala!%4006@cluster0.z8twpwf.mongodb
 // // fetch image 
 async function fetchImg(url){
     
-    const defaultImage ="https://image.shutterstock.com/shutterstock/photos/1094945555/display_1500/stock-photo-blue-suitcase-with-sun-glasses-hat-and-camera-on-pastel-blue-background-travel-concept-minimal-1094945555.jpg";
+    const defaultImage ="https://image.shutterstock.com/shutterstock/photos/1094945555/display_1500/stock-photo-blue-suitcase-with-sun-glasses-hat-and-camera-on-pastel-blue-background-travel-concept-minimal-1094945555.jpg";    
     console.log(url)
-   
-        await axios.get(url)
-        .then(response => {console.log(response.data.results[0])
+    
+    await axios.get(url)
+    .then(response => {
+        // console.log(response)
         let data = response.data.results[0]
-        updatedImg = data? data.urls.regular : defaultImage;
+        updatedImg = (data)? data.urls.regular : defaultImage
         console.log(updatedImg) 
     }).catch(err => {
         console.log(err)
     })
 }
 
-        
-        // let data = await response.results[0]
-        // console.log(url)
-        // console.log(data.urls.regular)
-        // updatedImg = data? data.urls.regular : defaultImage;
-        // console.log(updatedImg)    
-
-
+async function fetchGif(url){
+    
+    await axios.get(url)
+    .then(response => {
+        console.log(response)
+        let data = response.data.data[0].images.original.url
+        updatedImg = (data)? data : defaultImage
+        console.log(updatedImg) 
+    }).catch(err => {
+        console.log(err)
+    })
+}
