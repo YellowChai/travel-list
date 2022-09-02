@@ -1,20 +1,22 @@
+require('dotenv').config();
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
 const axios = require('axios')
-require('dotenv').config();
+const port = process.env.PORT || 3000
+
 
 let imgApiKey= process.env.API_KEY;
 let gifApiKey=process.env.GIPHY_API_KEY;
-let mongoDbKey = process.env.MONGO_DB_KEY;
+let db = process.env.DB;
+let updatedImg;
 const imgApiUrl = "https://api.unsplash.com/search/photos?query="
 const giphyApiUrl = "https://api.giphy.com/v1/gifs/search?q="
-let updatedImg;
 
 
 const MongoClient = require('mongodb').MongoClient
 
-MongoClient.connect("mongodb+srv://"+ mongoDbKey + "@cluster0.z8twpwf.mongodb.net/?retryWrites=true&w=majority")
+MongoClient.connect(db)
     .then(client => {
         console.log('Connected to Database')
         const db = client.db('travel-wishlist')
@@ -58,8 +60,9 @@ MongoClient.connect("mongodb+srv://"+ mongoDbKey + "@cluster0.z8twpwf.mongodb.ne
         // put
         app.put('/:id/wishlist/edit', async (req, res) => {
             console.log(req.params.id)
+            
             let unsplashUrl = imgApiUrl + req.body.destination+ '-' + req.body.location+ '&client_id=' + imgApiKey;
-            let gifUrl = giphyApiUrl + req.body.location + "&api_key=" + gifApiKey
+            let gifUrl = giphyApiUrl + req.body.destination + "&api_key=" + gifApiKey
             console.log("printing here", req.body.img.toString())
             if (req.body.img == "image"){
                 console.log("true")
@@ -102,14 +105,14 @@ MongoClient.connect("mongodb+srv://"+ mongoDbKey + "@cluster0.z8twpwf.mongodb.ne
             .catch(error => console.error(error))
         })
 
-        app.listen(3000, function() {
-            console.log('listening on 3000')
+        app.listen(port, function() {
+            console.log('listening')
         })
             
     })
     .catch(error => console.error(error))
 
-// // fetch image 
+// fetch image 
 async function fetchImg(url){
     
     const defaultImage ="https://image.shutterstock.com/shutterstock/photos/1094945555/display_1500/stock-photo-blue-suitcase-with-sun-glasses-hat-and-camera-on-pastel-blue-background-travel-concept-minimal-1094945555.jpg";    
