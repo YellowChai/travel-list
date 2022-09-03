@@ -27,7 +27,6 @@ MongoClient.connect(db)
         app.use(express.static('public'))
 
         app.set('view engine', 'ejs')
-        // res.render(view, locals)
 
         // get 
         app.get('/', (req, res) => {
