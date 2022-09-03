@@ -6,7 +6,6 @@ const axios = require('axios')
 const port = process.env.PORT || 3000
 const host = '0.0.0.0'
 
-
 let imgApiKey= process.env.API_KEY;
 let gifApiKey=process.env.GIPHY_API_KEY;
 let db = process.env.DB;
