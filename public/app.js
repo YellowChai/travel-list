@@ -8,18 +8,18 @@ const messageDiv = document.querySelector('#message')
 
 form.addEventListener("submit", addPlace);
 
-editButton.forEach(btn => btn.addEventListener("click", (e) => {
+// editButton.forEach(btn => btn.addEventListener("click", (e) => {
 
-    editPlace(e)
-}))
-deleteButton.forEach(btn => btn.addEventListener("click", (e) => {
+//     editPlace(e)
+// }))
+// deleteButton.forEach(btn => btn.addEventListener("click", (e) => {
     
-    deletePlace(e)
-}))
-gifButton.forEach(btn => btn.addEventListener("click", (e) => {
+//     deletePlace(e)
+// }))
+// gifButton.forEach(btn => btn.addEventListener("click", (e) => {
     
-    addGif(e)
-}))
+//     addGif(e)
+// }))
 
 
 
@@ -31,8 +31,7 @@ async function addPlace(event) {
     event.preventDefault();
     console.log("hit")
     //Create img with API img
-    const destInput = document.getElementsByName('destination')[0]
-    
+    const destInput = document.getElementsByName('destination')[0]    
     const destination = destInput.value
     const location = document.getElementsByName('location')[0].value
     const description = document.getElementsByName('description')[0].value    
@@ -45,7 +44,7 @@ async function addPlace(event) {
             destination: destination,
             location: location,
             description: description, 
-            img: 'image'           
+                     
         })
     })
         .then(res => {
@@ -58,22 +57,20 @@ async function addPlace(event) {
 }
 
 // update list
-async function editPlace(e){
-    const item = e.target
-    const list = item.parentElement.parentElement
-    const dest = list.querySelector(".dest")
-    
+async function editPlace(id, destination, location, description){
 
+    console.log(id, location, destination, description)
     //window prompts
-    const updatedDest = window.prompt("Enter new Destination");
-    const updatedLocation = window.prompt("Enter new Location");
-    const updatedDescription = window.prompt("Enter new description"); 
+    let updatedDest = window.prompt("Enter new Destination");
+    let updatedLocation = window.prompt("Enter new Location");
+    let updatedDescription = window.prompt("Enter new description"); 
 
-    console.log(updatedDest)
+    updatedDest = updatedDest? updatedDest : destination;
+    updatedLocation = updatedLocation? updatedLocation :location;
+    updatedDescription = updatedDescription? updatedDescription : description
 
-    const url = "/" + dest.innerText + "/wishlist/edit"
-    console.log(url)
-    console.log(dest.innerText)
+    const url = "/" + id + "/wishlist/edit"
+
     await fetch(url, {        
         method: 'put',
         headers: { 'Content-Type': 'application/json'},
@@ -93,19 +90,16 @@ async function editPlace(e){
         })
     }
 
-
 //delete list 
-function deletePlace(e){
-    const item = e.target
-    const list = item.parentElement.parentElement
-    const dest = list.querySelector(".dest")
-    const url = "/" + dest.innerText + "/wishlist/delete"
+function deletePlace(id){
+
+    const url = "/" + id + "/wishlist/delete"
     
     fetch(url, {
         method: 'delete',
         headers: { 'Content-Type': 'application/json'},
         body: JSON.stringify({
-            destination: 'Japan',
+            id: id,
         })
         
     })
@@ -124,25 +118,17 @@ function deletePlace(e){
 }
 
 // add gif (update image)
-async function addGif(e){
-    const item = e.target;
-    console.log('clicked')
-    const list = item.parentElement.parentElement;    
-    const dest = list.querySelector(".dest");
-    const loc = list.querySelector(".location")
-    const desc = list.querySelector(".description")
-    const url = "/" + dest.innerText + "/wishlist/edit"
+async function addGif(id,dest,loc, desc){
+
+    const url = "/" + id+ "/wishlist/edit"
     
-    const destData = dest.innerText
-    const locData = loc.innerText
-    const desData = desc.innerText
     await fetch(url, {
         method: 'put',
         headers: { 'Content-Type': 'application/json'},
         body: JSON.stringify({
-            destination: destData,
-            location: locData,
-            description: desData, 
+            destination: dest,
+            location: loc,
+            description: desc, 
             img: "gify"      
         })        
     })

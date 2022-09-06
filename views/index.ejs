@@ -45,9 +45,9 @@
                 <span class="description"><%= place[i].description %></span>
                 <img src=" <%= place[i].img %>"  class="img">
                     <div class ="btn-list">
-                        <button id="edit-button"> Edit</button>
-                        <button id="delete-button"> Delete</button>
-                        <button id="gif-button"> GIF</button>
+                        <button id="edit-button" onClick = "editPlace('<%= place[i]._id %>','<%= place[i].destination %>','<%= place[i].location %>','<%= place[i].description %>')"> Edit</button>
+                        <button id="delete-button" onClick = "deletePlace('<%= place[i]._id %>')"> Delete</button>
+                        <button id="gif-button" onClick = "addGif('<%= place[i]._id %>','<%= place[i].destination %>','<%= place[i].location %>','<%= place[i].description %>')"> GIF</button>
                     </div>         
             </li>
         <% } %>
