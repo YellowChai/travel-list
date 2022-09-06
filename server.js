@@ -38,7 +38,7 @@ MongoClient.connect(db)
         })
 
         //post 
-        app.post('/wishlist', async (req, res) => {
+        app.post('/', async (req, res) => {
             console.log(req.body)
             const url = imgApiUrl + req.body.destination+ '-' + req.body.location+ '&client_id=' + imgApiKey;
             await fetchImg(url)
