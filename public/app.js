@@ -1,4 +1,3 @@
-require('dotenv').config();
 const form = document.querySelector('form')
 let editButton = document.querySelectorAll("#edit-button")
 let deleteButton = document.querySelectorAll("#delete-button")
