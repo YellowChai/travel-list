@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const app = express()
 const axios = require('axios')
 const port = process.env.PORT || 3000
-
+const host = '0.0.0.0'
 
 let imgApiKey= process.env.API_KEY;
 let gifApiKey=process.env.GIPHY_API_KEY;
@@ -26,7 +26,6 @@ MongoClient.connect(db)
         app.use(express.static('public'))
 
         app.set('view engine', 'ejs')
-        // res.render(view, locals)
 
         // get 
         app.get('/', (req, res) => {
@@ -39,7 +38,7 @@ MongoClient.connect(db)
         })
 
         //post 
-        app.post('/wishlist', async (req, res) => {
+        app.post('/', async (req, res) => {
             console.log(req.body)
             const url = imgApiUrl + req.body.destination+ '-' + req.body.location+ '&client_id=' + imgApiKey;
             await fetchImg(url)
@@ -105,7 +104,7 @@ MongoClient.connect(db)
             .catch(error => console.error(error))
         })
 
-        app.listen(port, function() {
+        app.listen(port, host, function() {
             console.log('listening')
         })
             

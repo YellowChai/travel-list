@@ -38,7 +38,7 @@ async function addPlace(event) {
     const location = document.getElementsByName('location')[0].value
     const description = document.getElementsByName('description')[0].value    
 
-    await fetch('/wishList', {
+    await fetch('/', {
         
         method: 'post',
         headers: { 'Content-Type': 'application/json'},
