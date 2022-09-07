@@ -4,24 +4,9 @@ let deleteButton = document.querySelectorAll("#delete-button")
 let gifButton = document.querySelectorAll("#gif-button")
 const messageDiv = document.querySelector('#message')
 
-//event listners
 
+//Eventlistener for creating place 
 form.addEventListener("submit", addPlace);
-
-// editButton.forEach(btn => btn.addEventListener("click", (e) => {
-
-//     editPlace(e)
-// }))
-// deleteButton.forEach(btn => btn.addEventListener("click", (e) => {
-    
-//     deletePlace(e)
-// }))
-// gifButton.forEach(btn => btn.addEventListener("click", (e) => {
-    
-//     addGif(e)
-// }))
-
-
 
 //functions 
 
@@ -30,13 +15,13 @@ async function addPlace(event) {
       
     event.preventDefault();
     console.log("hit")
-    //Create img with API img
+
     const destInput = document.getElementsByName('destination')[0]    
     const destination = destInput.value
     const location = document.getElementsByName('location')[0].value
     const description = document.getElementsByName('description')[0].value    
 
-    await fetch('/', {
+    await fetch('/place', {
         
         method: 'post',
         headers: { 'Content-Type': 'application/json'},
@@ -44,6 +29,7 @@ async function addPlace(event) {
             destination: destination,
             location: location,
             description: description, 
+            image:''
                      
         })
     })
@@ -69,7 +55,7 @@ async function editPlace(id, destination, location, description){
     updatedLocation = updatedLocation? updatedLocation :location;
     updatedDescription = updatedDescription? updatedDescription : description
 
-    const url = "/" + id + "/wishlist/edit"
+    const url = "/place/" + id 
 
     await fetch(url, {        
         method: 'put',
@@ -93,7 +79,7 @@ async function editPlace(id, destination, location, description){
 //delete list 
 function deletePlace(id){
 
-    const url = "/" + id + "/wishlist/delete"
+    const url = "/place/" + id
     
     fetch(url, {
         method: 'delete',
@@ -104,7 +90,7 @@ function deletePlace(id){
         
     })
     .then(res => {
-        if(res.ok) return res.json()
+        if(res.ok) return res
     })
     .then(response => {
         if( response === 'No place to delete') {
@@ -120,7 +106,7 @@ function deletePlace(id){
 // add gif (update image)
 async function addGif(id,dest,loc, desc){
 
-    const url = "/" + id+ "/wishlist/edit"
+    const url = "/place/" + id
     
     await fetch(url, {
         method: 'put',
@@ -141,24 +127,5 @@ async function addGif(id,dest,loc, desc){
     })   
 }
 
-
-// //     var textContent = document.createTextNode('Hi! I am a modal popup created by pure javascript');
-// //     gifDiv.appendChild(textContent);
-// //     var newcloseButton= document.createElement('button');
-// //     var newContent = document.createTextNode('X');
-// //     newcloseButton.appendChild(newContent);
-// //     newcloseButton.id='btn';
-// //     // gifDiv.setAttribute('style', 'border:3px solid;height: 150px; width: 380px; top: 741px; left: 491px; padding:10px; margin: 50px;background:red; text-align: center;vertical-align: middle;line-height: 140px;');
-// //     newcloseButton.setAttribute('style', 'border :1px solid; height: 15px; width:20px; top: 6px; left: 4px; float: right; margin: 0px; padding:0px; clear: both; float:right;font-size:11px;');
-
-// //     gifDiv.appendChild(newcloseButton);
-// //     travelList.appendChild(gifDiv).appendChild(newcloseButton);
-
-// //     newcloseButton.onclick = function remove(btn)
-// //     {
-// //     gifDiv.parentElement.removeChild(gifDiv);
-// //     }
-
-// // }
 
 
