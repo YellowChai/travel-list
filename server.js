@@ -18,7 +18,7 @@ app.set('view engine', 'ejs');
 //ROUTES
 app.get("/", (req, res) =>
 {    
-    res.status(200).json({message: " HEllO "});
+    res.redirect("/place")
 });
 
 app.use("/place", places);
