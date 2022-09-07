@@ -1,8 +1,6 @@
 require('dotenv').config();
 const express = require('express')
-const bodyParser = require('body-parser')
 const app = express()
-
 const port = process.env.PORT || 3000
 
 const places = require("./routes/api/places");
@@ -20,7 +18,7 @@ app.set('view engine', 'ejs');
 //ROUTES
 app.get("/", (req, res) =>
 {    
-    res.status(200).json({message: " You\'re being watched by the Backend Team"});
+    res.status(200).json({message: " HEllO "});
 });
 
 app.use("/place", places);

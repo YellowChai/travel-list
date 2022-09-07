@@ -1,14 +1,11 @@
 require("dotenv").config();
 const express = require("express");
 const router = express.Router();
-const bodyParser = require('body-parser')
 const axios = require('axios')
 const db = require("../../models");
 
 let imgApiKey= process.env.API_KEY;
 let gifApiKey=process.env.GIPHY_API_KEY;
-let mongoDb = process.env.DB;
-
 const imgApiUrl = "https://api.unsplash.com/search/photos?query="
 const giphyApiUrl = "https://api.giphy.com/v1/gifs/search?q="
 let data;
@@ -24,8 +21,7 @@ router.get("/test", (req, res) =>
 
 // get route
 router.get('/', async (req,res) => {
-    console.log("2", db)
-    // await getPlace()
+
     db.Place.find().exec()   
     .then(foundPlace => {
             res.render('index', {place : foundPlace})
@@ -37,7 +33,6 @@ router.get('/', async (req,res) => {
 })
 
 //post route 
-
 router.post('/', async(req, res) =>{
    
     const url = imgApiUrl + req.body.destination+ '-' + req.body.location+ '&client_id=' + imgApiKey;
