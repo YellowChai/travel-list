@@ -2,10 +2,36 @@ require('dotenv').config();
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
+// const cors = require("cors");
 const axios = require('axios')
 const port = process.env.PORT || 3000
+
+const places = require("./routes/api/places");
 const host = '0.0.0.0'
-const ObjectId = require('mongodb').ObjectId
+// const ObjectId = require('mongodb').ObjectId
+
+//MIDDLEWARE
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());
+
+
+//ROUTES
+app.get("/", (req, res) =>
+{    
+    res.status(200).json({message: " You\'re being watched by the Backend Team"});
+});
+
+app.use("/place", places);
+
+app.listen(port, () =>
+{
+    console.log('Server is running on port')
+});
+
+
+
+
+
 
 let imgApiKey= process.env.API_KEY;
 let gifApiKey=process.env.GIPHY_API_KEY;
