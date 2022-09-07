@@ -43,7 +43,7 @@
                 <span class="dest"><%= place[i].destination %></span>
                 <span class="location"><%= place[i].location %></span>
                 <span class="description"><%= place[i].description %></span>
-                <img src=" <%= place[i].img %>"  class="img">
+                <img src=" <%= place[i].image %>"  class="img">
                     <div class ="btn-list">
                         <button id="edit-button" onClick = "editPlace('<%= place[i]._id %>','<%= place[i].destination %>','<%= place[i].location %>','<%= place[i].description %>')"> Edit</button>
                         <button id="delete-button" onClick = "deletePlace('<%= place[i]._id %>')"> Delete</button>
