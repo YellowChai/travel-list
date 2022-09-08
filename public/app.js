@@ -1,7 +1,4 @@
 const form = document.querySelector('form')
-let editButton = document.querySelectorAll("#edit-button")
-let deleteButton = document.querySelectorAll("#delete-button")
-let gifButton = document.querySelectorAll("#gif-button")
 const messageDiv = document.querySelector('#message')
 
 
@@ -94,7 +91,7 @@ function deletePlace(id){
     })
     .then(response => {
         if( response === 'No place to delete') {
-            messageDiv.textContent = "no Japane to delete"
+            messageDiv.textContent = "testing"
         }else {
         console.log(response)
         window.location.reload()
@@ -104,7 +101,7 @@ function deletePlace(id){
 }
 
 // add gif (update image)
-async function addGif(id,dest,loc, desc){
+async function addGif(id,dest,loc,desc){
 
     const url = "/place/" + id
     

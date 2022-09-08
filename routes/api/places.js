@@ -15,7 +15,7 @@ let updatedImg;
 router.get("/test", (req, res) =>
 {
     console.log("hit")
-    res.json({msg: "User endpoint OK"});
+    res.json({msg: "place endpoint testing"});
 });
 
 
@@ -39,7 +39,7 @@ router.post('/', async(req, res) =>{
     await fetchImg(url)
     updatedImg = (data) ? data.results[0].urls.regular : defaultImage   
     req.body.image = updatedImg
-   db.Place.create(req.body)
+    db.Place.create(req.body)
    .then(createdPost => {
         res.status(201).send(createdPost)
     })
@@ -90,7 +90,7 @@ router.delete('/:id', async(req, res) => {
     })
     .catch(err=>{
         console.log(err)
-        res.status(503).send({message: 'server is not kind'})
+        res.status(503).send({message: 'coudlnt find the place'})
     })
 })
 
